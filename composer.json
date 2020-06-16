@@ -14,7 +14,7 @@
         "php": "^7.2",
         "ext-json": "*",
         "sbooker/command-bus": "0.1.*",
-        "sbooker/yii2-ar-transaction-handler": "0.1.*",
+        "sbooker/yii2-ar-transaction-handler": ">=0.1.1 <1.0.0",
         "laminas/laminas-hydrator": "^3.0"
     },
     "require-dev": {
@@ -22,7 +22,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Sbooker\\CommandBus\\Infrastructure\\Persistence\\": "src/"
+            "Sbooker\\CommandBus\\": "src/"
         }
     },
     "autoload-dev": {

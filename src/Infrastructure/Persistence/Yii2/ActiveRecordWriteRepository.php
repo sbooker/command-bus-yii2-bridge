@@ -46,6 +46,7 @@ final class ActiveRecordWriteRepository implements WriteStorage
                 ->andWhere(['name' => $names])
                 ->andWhere(['status' => [Status::pending()->getRawValue(), Status::created()->getRawValue()]])
                 ->andWhere(['<', 'next_attempt_at', (new \DateTimeImmutable())->format('Y-m-d H:i:s')])
+                ->orderBy(['next_attempt_at' => SORT_ASC])
         ;
 
         return $this->getLockedCommand($query);
