@@ -1,0 +1,18 @@
+version: '3'
+services:
+
+  app:
+    build:
+      context: .
+    environment:
+      XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=9000 idekey=PHPSTORM
+      PHP_IDE_CONFIG: serverName=app
+    volumes:
+      - ~/.ssh:/home/app/.ssh:ro
+      - ../../../../../../../:/opt/app
+    tty: true
+    restart: always
+    depends_on:
+      - pgsql12
+      - mysql5
+      - mysql8
