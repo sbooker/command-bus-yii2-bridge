@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sbooker\CommandBus\Infrastructure\Persistence\Yii2;
 
+use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 use Sbooker\CommandBus\Command;
 use Sbooker\CommandBus\Status;
@@ -49,7 +50,13 @@ final class ActiveRecordWriteRepository implements WriteStorage
                 ->orderBy(['next_attempt_at' => SORT_ASC])
         ;
 
-        return $this->getLockedCommand($query);
+        $record = $this->getCommandRecord($query);
+
+        if (null === $record) {
+            return null;
+        }
+
+        return $this->getAndLock($names, Uuid::fromString($record->id));
     }
 
     public function save(Command $command): void
@@ -57,6 +64,10 @@ final class ActiveRecordWriteRepository implements WriteStorage
         $this->unitOfWork->scheduleForUpdate($command, $this->mapper);
     }
 
+    private function getCommandRecord(ActiveQuery $query): ?CommandRecord
+    {
+        return CommandRecord::findBySql($query->limit(1)->createCommand()->getRawSql())->one();
+    }
 
     private function getLockedCommand(ActiveQuery $query): ?Command
     {
