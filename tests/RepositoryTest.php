@@ -15,8 +15,6 @@ use Sbooker\CommandBus\WriteStorage;
 use Sbooker\TransactionManager\TransactionManager;
 use Sbooker\TransactionManager\Yii2ActiveRecord\TransactionHandler;
 use Sbooker\TransactionManager\Yii2ActiveRecord\UnitOfWork;
-use Tests\Sbooker\CommandBus\Infrastructure\Persistence\StorageTest;
-use Tests\Sbooker\CommandBus\Infrastructure\Persistence\TestDatabases;
 use yii\console\ErrorHandler;
 use yii\db\Connection;
 
